@@ -1,0 +1,168 @@
+@charset "utf-8";
+$color:#f00 #f0f;
+$fontSize:12px;
+$borderDirection:top !default;
+$baseFontSize:12px !default;
+$baseLineHeight:1.5 !default;
+$px:(10px 20px)(20px 30px);
+$headings:(h1:2em #f00,h2:1.5em #f00,h3:1.2em #f00,h4:1em #f00,h5:1em #f00,h6:1em #f00);
+body{
+	color:nth($color,1);
+	font:#{$baseFontSize}/#{$baseLineHeight};
+}
+.border-#{$borderDirection}{
+	border-#{$borderDirection}:1px solid #f00
+}
+a{
+	color:nth($color,1);
+	padding: nth($px,1);
+	margin:nth($px,2);
+	&:hover{
+		color:nth($color,2);
+	}; 
+}
+@each $header,$size in $headings{
+	#{$header}{
+		font-size:nth($size,1);
+		color: nth($size,2)
+	};
+}
+p{
+	$fontSize:14px /* !global */;
+	font-size: $fontSize
+}
+span{
+	font-size: $fontSize
+}
+/* 选择器嵌套 */
+#top_nav{
+	line-height: 40px;
+	text-transform: capitalize;
+	background-color: #333;
+	li{
+		float: left;
+	}
+	a{
+		display: inline-block;
+		padding: 0 10px;
+		color: #fff;
+		&:hover{
+			color:#ddd;
+		};
+	}
+}
+/* 属性嵌套 */
+.fakeshadow{
+	border:{
+		style:solid;
+		left:{
+			width: 4px;
+			color: #888;
+		}
+		right:{
+			width: 2px;
+			color: #ccc;
+		}
+	}
+}
+/* @at-root */
+.parent-1{
+	color: #f00;
+	.child{
+		width: 100px;
+	}
+}
+.parent-2{
+	color: #f00;
+	@at-root .child{
+		width: 200px;
+	}
+}
+.parent-3{
+	background-color: #f00;
+	@at-root{
+		.child1{
+			width: 300px;
+		}
+		.child2{
+			width: 400px;
+		}
+	}
+}
+/* @at-root跳出media print */
+@media print{
+	.parent1{
+		color: #f00;
+		@at-root .child1{
+			width: 200px;
+		}
+	}
+}
+@media print{
+	.parent2{
+		color: #f00;
+		@at-root(without:media){
+			.child2{
+				width: 200px;
+			}
+		}
+	}
+}
+@media print{
+	.parent3{
+		color: #f00;
+		@at-root(without:all){
+			.child3{
+				width:200px;
+			}
+		}
+	}
+}
+/* 混合mixin */
+@mixin center-block{
+	margin-right: auto;
+	margin-left: auto;
+}
+.demo{
+	@include center-block
+}
+@mixin opacity($opacity: 50){
+	opacity:$opacity/100 ;
+	filter: alpha(opacity=$opacity);
+}
+.opacity{
+	@include opacity;
+}
+.opacity-80{
+	@include opacity(80);
+}
+/* 混合模式多参数 */
+@mixin horizontal-line($border:1px solid #ccc,$padding: 10px){
+	border-bottom: $border;
+	padding-top: $padding;
+	padding-bottom: $padding;
+}
+.imgtext-h li{
+	@include horizontal-line($border:1px solid #f00);
+}
+.imgtext-h-product li{
+	@include horizontal-line($padding:20px);
+}
+/* 多参数 */
+@mixin box-shadow($shadow...){
+	box-shadow: $shadow;
+	-webkit-box-shadow:$shadow;
+}
+.box{
+	border:1px solid #eee;
+	@include box-shadow(0 2px 2px rgba(0,0,0,.3),0 3px 3px rgba(0,0,0,.3),0 4px 4px rgba(0,0,0,.3))
+}
+.demo{
+	animation: motion 3s infinite;
+	@at-root{
+		@keyframes motion{
+			from {top:0;};
+			to {top:100%;}
+		}
+	}
+}

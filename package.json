@@ -1,0 +1,19 @@
+{
+  "name": "guestopened",
+  "version": "1.0.0",
+  "description": "项目测试",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0oTailoro0/GuestOpened.git"
+  },
+  "author": "Talor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0oTailoro0/GuestOpened/issues"
+  },
+  "homepage": "https://github.com/0oTailoro0/GuestOpened#readme"
+}
